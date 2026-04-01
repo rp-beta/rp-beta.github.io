@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DACSβ-RPs</title>
+    <link rel="icon" type="image/png" href="static/recurrence_plot.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="styles.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-indigo-100 selection:text-indigo-900">
+
+    <nav class="backdrop-blur-xl bg-white/70 border-b border-slate-200/50 sticky top-0 z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex items-center group">
+                    <img src="static/UM_logo.jpg" alt="UM Logo" class="h-10 w-auto mr-4 transition-transform group-hover:scale-105" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x50?text=UM+Logo';">
+                    <span class="hidden md:block font-bold text-lg text-slate-900 tracking-tight border-l border-slate-300 pl-4">Department of Advanced Computing Sciences</span>
+                    <span class="md:hidden font-bold text-lg text-slate-900 tracking-tight border-l border-slate-300 pl-4">DACS</span>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#tool" class="text-sm text-slate-600 hover:text-indigo-600 font-semibold transition-colors">RP Computer</a>
+                    <a href="#resources" class="text-sm text-slate-600 hover:text-indigo-600 font-semibold transition-colors">Packages</a>
+                    <a href="#papers" class="text-sm text-slate-600 hover:text-indigo-600 font-semibold transition-colors">Research</a>
+                    <button onclick="toggleAuthorModal(event)" class="text-sm text-slate-600 hover:text-indigo-600 font-semibold transition-colors">Contact</button>
+                </div>
+
+                <div class="flex items-center md:hidden">
+                    <button onclick="toggleMobileMenu()" class="text-slate-600 hover:text-indigo-600 focus:outline-none transition-colors">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white/95 backdrop-blur-xl border-t border-slate-200/50 absolute w-full shadow-lg transition-all duration-300">
+            <div class="flex flex-col px-6 py-4 space-y-4">
+                <a href="#tool" onclick="toggleMobileMenu()" class="block text-base text-slate-700 font-semibold hover:text-indigo-600 transition-colors">RP Computer</a>
+                <a href="#resources" onclick="toggleMobileMenu()" class="block text-base text-slate-700 font-semibold hover:text-indigo-600 transition-colors">Packages</a>
+                <a href="#papers" onclick="toggleMobileMenu()" class="block text-base text-slate-700 font-semibold hover:text-indigo-600 transition-colors">Research</a>
+                <button onclick="toggleAuthorModal(event); toggleMobileMenu()" class="block w-full text-left text-base text-slate-700 font-semibold hover:text-indigo-600 transition-colors">Contact</button>
+            </div>
+        </div>
+    </nav>
+
+        <div class="bg-slate-900 py-20 sm:py-28 border-b border-slate-800">
+            <div class="max-w-4xl mx-auto px-6 lg:px-8 text-center">
+                <p class="text-slate-400 font-semibold tracking-wider uppercase text-xs mb-4">
+                </p>
+
+                <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight mb-6 text-white leading-tight">
+                    β-Divergence Recurrence Plots
+                </h1>
+
+                <p class="text-lg text-slate-300 leading-relaxed font-normal mb-10">
+                    Methods and tools for the analysis of time series based on β-divergence metric constructions. Includes interactive visualizations, software implementations, and research publications.
+                </p>
+
+                <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="#tool" class="w-full sm:w-auto bg-white text-slate-900 px-6 py-3 rounded-lg font-semibold shadow-sm hover:bg-slate-100 transition-colors flex items-center justify-center">
+                        <i class="fa-solid fa-calculator mr-2 text-slate-600"></i> Open RP Computer
+                    </a>
+                    <a href="#papers" class="w-full sm:w-auto border border-slate-600 text-slate-300 px-6 py-3 rounded-lg font-medium hover:bg-slate-800 hover:text-white transition-colors flex items-center justify-center">
+                        <i class="fa-solid fa-book-bookmark mr-2"></i> View Publications
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 py-24">
+        
+        <section id="tool" class="mb-32">
+            <div class="flex items-center mb-10">
+                <div class="w-12 h-12 rounded-xl bg-indigo-100 flex items-center justify-center mr-4">
+                    <i class="fa-solid fa-calculator text-2xl text-indigo-600"></i>
+                </div>
+                <h2 class="text-3xl font-bold text-slate-900 tracking-tight">Interactive RP Computer</h2>
+            </div>
+            
+            <div class="bg-white rounded-3xl shadow-xl shadow-slate-200/50 overflow-hidden ring-1 ring-slate-900/5">
+                <div class="grid grid-cols-1 lg:grid-cols-5">
+                    
+                    <div class="lg:col-span-2 p-8 sm:p-10 bg-slate-50 border-r border-slate-100 flex flex-col justify-center">
+                        <h3 class="text-lg font-bold mb-6 text-slate-800 flex items-center">
+                            <i class="fa-solid fa-sliders text-sm text-slate-400 mr-2"></i> Parameters
+                        </h3>
+                        <div class="space-y-5">
+
+                            <!-- Data source toggle -->
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">Data Source</label>
+                                <div class="source-toggle">
+                                    <button id="src-function" class="active" onclick="setDataSource('function')">
+                                        <i class="fa-solid fa-function mr-1" style="font-size:0.7rem"></i> Function
+                                    </button>
+                                    <button id="src-upload" onclick="setDataSource('upload')">
+                                        <i class="fa-solid fa-file-arrow-up mr-1" style="font-size:0.7rem"></i> Upload Data
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Function input (default visible) -->
+                            <div id="function-input-group">
+                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">Mathematical Function, f(x)</label>
+                                <input type="text" id="function" value="sin(x) + 2" class="font-mono w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl shadow-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all">
+                            </div>
+
+                            <!-- File upload input (hidden by default) -->
+                            <div id="upload-input-group" class="hidden">
+                                <div class="flex items-center justify-between mb-1.5">
+                                    <label class="block text-sm font-semibold text-slate-700">Upload Time Series</label>
+                                    <button onclick="toggleFormatModal()" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 transition-colors flex items-center">
+                                        <i class="fa-solid fa-circle-info mr-1"></i> Format Guide
+                                    </button>
+                                </div>
+                                <div id="upload-zone" class="upload-zone" onclick="document.getElementById('file-input').click()">
+                                    <input type="file" id="file-input" accept=".csv,.txt,.tsv" class="hidden" onchange="handleFileSelect(event)">
+                                    <div class="icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+                                    <div class="label" id="upload-label">Click or drop a file here</div>
+                                    <div class="sublabel" id="upload-sublabel">.csv, .txt, or .tsv</div>
+                                </div>
+                                <div id="file-info" class="hidden mt-2 flex items-center justify-between text-xs">
+                                    <span id="file-info-text" class="text-slate-600 font-medium truncate mr-2"></span>
+                                    <button onclick="clearUploadedFile()" class="text-red-400 hover:text-red-600 transition-colors flex-shrink-0" title="Remove file">
+                                        <i class="fa-solid fa-xmark"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">Distance Metric</label>
+                                    <select id="metric" onchange="toggleBeta()" class="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl shadow-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all appearance-none cursor-pointer">
+                                        <option value="beta">β-Divergence</option>
+                                        <option value="euclidean">Euclidean</option>
+                                    </select>
+                                </div>
+                                <div id="beta_group" style="display: block;">
+                                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">Beta value (β)</label>
+                                    <input type="number" id="beta" value="2.0" step="0.1" class="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl shadow-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">Plot Type</label>
+                                    <select id="rp_type" onchange="toggleThresholdInput()" class="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl shadow-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all appearance-none cursor-pointer">
+                                        <option value="thresholded">Thresholded</option>
+                                        <option value="unthresholded">Unthresholded</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">Threshold (ε)</label>
+                                    <input type="number" id="threshold" value="0.1" step="0.05" min="0" class="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl shadow-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all disabled:opacity-50 disabled:bg-slate-100">
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">Embed Dim (m)</label>
+                                    <input type="number" id="embedding_dim" value="1" step="1" min="1" class="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl shadow-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">Delay (τ)</label>
+                                    <input type="number" id="time_delay" value="1" step="1" min="1" class="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl shadow-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all">
+                                </div>
+                            </div>
+
+                            <button onclick="calculateRP()" class="w-full mt-6 bg-slate-900 hover:bg-indigo-600 text-white font-semibold py-3.5 px-4 rounded-xl transition duration-300 shadow-md hover:shadow-lg flex justify-center items-center group">
+                                Generate Plot <i class="fa-solid fa-arrow-right ml-2 opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-3 p-8 sm:p-10 flex flex-col items-center justify-center min-h-[400px] bg-white relative">
+                        <div id="placeholder-text" class="absolute inset-8 border-2 border-dashed border-slate-200 rounded-2xl flex flex-col items-center justify-center text-slate-400 bg-slate-50/50">
+                            <i class="fa-solid fa-chart-area text-4xl mb-3 opacity-20"></i>
+                            <p class="text-sm font-medium">Configure parameters and generate plot</p>
+                        </div>
+
+                        <div id="loading" class="hidden z-10 flex-col items-center bg-white/80 backdrop-blur p-6 rounded-2xl">
+                            <div class="loader ease-linear rounded-full border-4 border-t-4 border-slate-200 h-10 w-10 mb-4"></div>
+                            <p class="text-indigo-600 font-semibold text-sm animate-pulse">Computing Matrix...</p>
+                        </div>
+                        
+                        <p id="errorMessage" class="text-red-500 font-semibold mb-6 text-center hidden z-10 bg-red-50 px-4 py-2 rounded-lg text-sm border border-red-100"></p>
+                        
+                        <div class="flex flex-col items-center w-full z-10">
+                            <div class="flex items-center justify-between w-full max-w-[400px] mb-4">
+                                <h4 id="plotTitle" class="text-sm font-bold text-slate-700 font-mono hidden"></h4>
+                                <button id="downloadBtn" onclick="downloadImage()" class="hidden text-slate-400 hover:text-indigo-600 transition-colors" title="Download Plot">
+                                    <i class="fa-solid fa-download text-lg"></i>
+                                </button>
+                            </div>
+                            <img id="result" src="" alt="Recurrence Plot Output" class="w-full max-w-[400px] object-contain border border-slate-200 rounded-lg shadow-sm hidden" style="image-rendering: pixelated;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="resources" class="mb-32">
+            <div class="flex items-center mb-10">
+                <div class="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center mr-4">
+                    <i class="fa-solid fa-box-open text-2xl text-blue-600"></i>
+                </div>
+                <h2 class="text-3xl font-bold text-slate-900 tracking-tight">Software Implementations</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm hover:shadow-xl hover:border-orange-200 transition-all duration-300 group flex flex-col relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
+                        <i class="fa-solid fa-square-root-variable text-8xl text-orange-500"></i>
+                    </div>
+                    <div class="flex items-center mb-6 relative z-10">
+                        <div class="w-10 h-10 rounded-lg bg-orange-50 text-orange-500 flex items-center justify-center mr-4 border border-orange-100">
+                            <i class="fa-solid fa-cube"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900">MATLAB Toolbox</h3>
+                    </div>
+                    
+                    <p class="text-slate-600 mb-2 flex-grow relative z-10 text-sm leading-relaxed">
+                        A collection of MATLAB scripts and functions for generating and analyzing β-divergence RPs.
+                    </p>
+                    <p class="text-sm text-gray-500 mb-6 italic relative z-10">
+                        The toolbox can be cited as: [Placeholder for reference]
+                    </p>
+                    
+                    <div class="bg-slate-900 p-4 rounded-xl text-xs font-mono text-emerald-400 mb-6 w-full shadow-inner relative z-10 flex justify-between items-center group/code">
+                        <div><span class="text-slate-500 mr-2">>></span>addpath('um_rp_toolbox')</div>
+                        <button onclick="copyCode('addpath(\'um_rp_toolbox\')', this)" class="text-slate-500 hover:text-emerald-400 transition-colors" title="Copy to clipboard">
+                            <i class="fa-regular fa-copy"></i>
+                        </button>
+                    </div>
+
+                    <a href="#" class="inline-flex items-center text-orange-600 text-sm font-bold hover:text-orange-700 relative z-10">
+                        Download Toolbox <i class="fa-solid fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+                    </a>
+                </div>
+
+                <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm hover:shadow-xl hover:border-blue-200 transition-all duration-300 group flex flex-col relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
+                        <i class="fa-brands fa-python text-8xl text-blue-500"></i>
+                    </div>
+                    <div class="flex items-center mb-6 relative z-10">
+                        <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-500 flex items-center justify-center mr-4 border border-blue-100">
+                            <i class="fa-brands fa-python"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900">Python Package</h3>
+                    </div>
+                    
+                    <p class="text-gray-600 mb-2 flex-grow relative z-10 text-sm leading-relaxed">
+                        This Python package provides an implementation for computing β-divergence RPs.
+                    </p>
+                    <p class="text-sm text-gray-500 mb-6 italic relative z-10">
+                        The package can be cited as: [Placeholder for reference]
+                    </p>
+
+                    <div class="bg-slate-900 p-4 rounded-xl text-xs font-mono text-blue-300 mb-6 w-full shadow-inner relative z-10 flex justify-between items-center group/code">
+                        <div><span class="text-slate-500 mr-2">$</span>pip install um-recurrence-plots</div>
+                        <button onclick="copyCode('pip install um-recurrence-plots', this)" class="text-slate-500 hover:text-blue-300 transition-colors" title="Copy to clipboard">
+                            <i class="fa-regular fa-copy"></i>
+                        </button>
+                    </div>
+
+                    <a href="#" class="inline-flex items-center text-blue-600 text-sm font-bold hover:text-blue-700 relative z-10">
+                        View Documentation <i class="fa-solid fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="papers" class="mb-16">
+            <div class="flex items-center mb-10">
+                <div class="w-12 h-12 rounded-xl bg-emerald-100 flex items-center justify-center mr-4">
+                    <i class="fa-solid fa-book-bookmark text-2xl text-emerald-600"></i>
+                </div>
+                <h2 class="text-3xl font-bold text-slate-900 tracking-tight">Publications</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white rounded-3xl border border-slate-200 p-6 flex flex-col hover:border-emerald-300 hover:shadow-xl hover:shadow-emerald-100/50 transition-all duration-300 group">
+                    <div class="mb-4 flex items-start justify-between">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-slate-100 text-slate-800">Preprint</span>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-900 mb-3 leading-snug group-hover:text-emerald-700 transition-colors">Beta-Divergence-Based RPs for Time Series Analysis: Properties and Applications</h3>
+                    <p class="text-sm text-slate-500 mb-6 flex-grow"></p>
+                    <div class="mt-auto grid grid-cols-3 gap-2">
+                        <a href="papers/Beta-Divergence-Based_RPs_for_Time_Series.pdf" target="_blank" class="inline-flex items-center justify-center w-full px-2 py-2.5 border border-slate-200 text-xs font-bold rounded-xl text-slate-700 bg-white hover:bg-slate-50 hover:border-slate-300 transition-colors">
+                            <i class="fa-solid fa-file-pdf mr-1 text-red-500"></i> PDF
+                        </a>
+                        <button disabled class="inline-flex items-center justify-center w-full px-2 py-2.5 border border-transparent text-xs font-bold rounded-xl text-white bg-slate-300 cursor-not-allowed">
+                            <i class="fa-brands fa-github mr-1"></i> Code
+                        </button>
+                        <button disabled class="inline-flex items-center justify-center w-full px-2 py-2.5 border border-slate-200 text-xs font-bold rounded-xl text-slate-400 bg-slate-50 cursor-not-allowed">
+                            <i class="fa-solid fa-quote-right mr-1"></i> BibTeX
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-3xl border border-slate-200 p-6 flex flex-col hover:border-emerald-300 hover:shadow-xl hover:shadow-emerald-100/50 transition-all duration-300 group">
+                    <div class="mb-4 flex items-start justify-between">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-100">EUSIPCO 2025</span>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-900 mb-3 leading-snug group-hover:text-emerald-700 transition-colors">Beta-Divergence-Based Recurrence Plots for Audio Time-Series Analysis</h3>
+                    <p class="text-sm text-slate-500 mb-6 flex-grow">Proc. 33rd EUSIPCO, 2025.</p>
+                    <div class="mt-auto grid grid-cols-3 gap-2">
+                        <a href="papers/Beta-Divergence-Based_Recurrence_Plots_for_Audio.pdf" target="_blank" class="inline-flex items-center justify-center w-full px-2 py-2.5 border border-slate-200 text-xs font-bold rounded-xl text-slate-700 bg-white hover:bg-slate-50 hover:border-slate-300 transition-colors">
+                            <i class="fa-solid fa-file-pdf mr-1 text-red-500"></i> PDF
+                        </a>
+                        <a href="https://gitlab.maastrichtuniversity.nl/I6359575/beta-divergence-recurrence-plots/-/tree/main" target="_blank" class="inline-flex items-center justify-center w-full px-2 py-2.5 border border-transparent text-xs font-bold rounded-xl text-white bg-slate-900 hover:bg-slate-800 transition-colors">
+                            <i class="fa-brands fa-gitlab mr-1"></i> Code
+                        </a>
+                        <button onclick="copyBibtex('deckert2025', this)" class="inline-flex items-center justify-center w-full px-2 py-2.5 border border-slate-200 text-xs font-bold rounded-xl text-slate-700 bg-white hover:bg-slate-50 hover:border-slate-300 transition-colors">
+                            <i class="fa-solid fa-quote-right mr-1"></i> BibTeX
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-3xl border border-slate-200 p-6 flex flex-col hover:border-emerald-300 hover:shadow-xl hover:shadow-emerald-100/50 transition-all duration-300 group">
+                    <div class="mb-4 flex items-start justify-between">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-amber-50 text-amber-700 border border-amber-100">Submitted</span>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-900 mb-3 leading-snug group-hover:text-emerald-700 transition-colors">Beta-Divergence-Based Recurrence Analysis of EEG Signals for Seizure Detection</h3>
+                    <p class="text-sm text-slate-500 mb-6 flex-grow">Submitted to EUSIPCO, 2026.</p>
+                    <div class="mt-auto grid grid-cols-3 gap-2">
+                        <a href="papers/Beta-Divergence-Based_Recurrence_Analysis_of_EEG.pdf" target="_blank" class="inline-flex items-center justify-center w-full px-2 py-2.5 border border-slate-200 text-xs font-bold rounded-xl text-slate-700 bg-white hover:bg-slate-50 hover:border-slate-300 transition-colors">
+                            <i class="fa-solid fa-file-pdf mr-1 text-red-500"></i> PDF
+                        </a>
+                        <a href="https://github.com/FilipPolakowski/beta_div_recurrence_plots" target="_blank" class="inline-flex items-center justify-center w-full px-2 py-2.5 border border-transparent text-xs font-bold rounded-xl text-white bg-slate-900 hover:bg-slate-800 transition-colors">
+                            <i class="fa-brands fa-github mr-1"></i> Code
+                        </a>
+                        <button onclick="copyBibtex('polakowski2026', this)" class="inline-flex items-center justify-center w-full px-2 py-2.5 border border-slate-200 text-xs font-bold rounded-xl text-slate-700 bg-white hover:bg-slate-50 hover:border-slate-300 transition-colors">
+                            <i class="fa-solid fa-quote-right mr-1"></i> BibTeX
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Author/Contact Modal (unchanged) -->
+    <div id="author-modal" class="hidden fixed inset-0 z-[100] bg-slate-900/50 backdrop-blur-sm overflow-y-auto w-full h-full flex justify-center items-start sm:items-center p-4 sm:p-0" onclick="closeAuthorModal(event)">        <div class="relative bg-white rounded-3xl shadow-2xl w-full max-w-5xl mx-4 my-8 p-8" onclick="event.stopPropagation()">
+            <button onclick="toggleAuthorModal(event)" class="absolute top-6 right-6 text-slate-400 hover:text-slate-900 text-2xl transition-colors">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h2 class="text-3xl font-bold text-slate-900 mb-8 tracking-tight text-center">Contact</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+                <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200 flex flex-col items-center text-center hover:shadow-md transition-shadow">
+                    <img src="static/carlos_martinez.jpg" alt="Carlos Martínez" class="w-24 h-24 rounded-full object-cover mb-4 shadow-sm" onerror="this.onerror=null; this.src='https://via.placeholder.com/150';">
+                    <h3 class="font-bold text-slate-900">Carlos Martínez</h3>
+                    <p class="text-xs text-indigo-600 font-semibold mb-2">PhD Student</p>
+                    <p class="text-xs text-slate-500 mb-4 flex-grow">Dept of Advanced Computing Sciences<br>Maastricht University</p>
+                    <button onclick="copyObfuscatedEmail('carlos.martinezgarcia', 'maastrichtuniversity.nl', this)" class="text-xs font-medium text-slate-700 bg-white border border-slate-200 hover:bg-slate-100 rounded-lg px-3 py-2 w-full transition-colors flex justify-center items-center">
+                        <i class="fa-solid fa-envelope mr-1"></i> Copy Email
+                    </button>
+                </div>
+
+                <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200 flex flex-col items-center text-center hover:shadow-md transition-shadow">
+                    <img src="static/philippe_dreesen.jpg" alt="Dr. Ir. Philippe Dreesen" class="w-24 h-24 rounded-full object-cover mb-4 shadow-sm" onerror="this.onerror=null; this.src='https://via.placeholder.com/150';">
+                    <h3 class="font-bold text-slate-900">Dr. Ir. Philippe Dreesen</h3>
+                    <p class="text-xs text-indigo-600 font-semibold mb-2">Assistant Professor</p>
+                    <p class="text-xs text-slate-500 mb-4 flex-grow">Dept of Advanced Computing Sciences<br>Maastricht University</p>
+                    <button onclick="copyObfuscatedEmail(' ', 'maastrichtuniversity.nl', this)" class="text-xs font-medium text-slate-700 bg-white border border-slate-200 hover:bg-slate-100 rounded-lg px-3 py-2 w-full transition-colors flex justify-center items-center">
+                        <i class="fa-solid fa-envelope mr-1"></i> Copy Email
+                    </button>
+                </div>
+
+                <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200 flex flex-col items-center text-center hover:shadow-md transition-shadow">
+                    <img src="static/martijn_bousse.jpg" alt="Dr. Ir. Martijn Boussé" class="w-24 h-24 rounded-full object-cover mb-4 shadow-sm" onerror="this.onerror=null; this.src='https://via.placeholder.com/150';">
+                    <h3 class="font-bold text-slate-900">Dr. Ir. Martijn Boussé</h3>
+                    <p class="text-xs text-indigo-600 font-semibold mb-2">Assistant Professor</p>
+                    <p class="text-xs text-slate-500 mb-4 flex-grow">Dept of Advanced Computing Sciences<br>Maastricht University</p>
+                    <button onclick="copyObfuscatedEmail(' ', 'maastrichtuniversity.nl', this)" class="text-xs font-medium text-slate-700 bg-white border border-slate-200 hover:bg-slate-100 rounded-lg px-3 py-2 w-full transition-colors flex justify-center items-center">
+                        <i class="fa-solid fa-envelope mr-1"></i> Copy Email
+                    </button>
+                </div>
+
+                <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200 flex flex-col items-center text-center hover:shadow-md transition-shadow">
+                    <img src="static/ralf_peeters.jpg" alt="Prof. Dr. Ir. Ralf Peeters" class="w-24 h-24 rounded-full object-cover mb-4 shadow-sm" onerror="this.onerror=null; this.src='https://via.placeholder.com/150';">
+                    <h3 class="font-bold text-slate-900">Prof. Dr. Ir. Ralf Peeters</h3>
+                    <p class="text-xs text-indigo-600 font-semibold mb-2">Full Professor</p>
+                    <p class="text-xs text-slate-500 mb-4 flex-grow">Dept of Advanced Computing Sciences<br>Maastricht University</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Format Guide Modal -->
+    <div id="format-modal" class="hidden fixed inset-0 z-[100] bg-slate-900/50 backdrop-blur-sm overflow-y-auto w-full h-full p-4 sm:p-8" onclick="closeFormatModal(event)">
+        <div class="relative bg-white rounded-3xl shadow-2xl w-full max-w-lg mx-auto my-auto p-8" style="margin-top: max(2rem, calc(50vh - 280px));" onclick="event.stopPropagation()">
+            <button onclick="toggleFormatModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-900 text-xl transition-colors">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="flex items-center mb-6">
+                <div class="w-10 h-10 rounded-xl bg-indigo-100 flex items-center justify-center mr-3">
+                    <i class="fa-solid fa-file-lines text-indigo-600"></i>
+                </div>
+                <h2 class="text-xl font-bold text-slate-900 tracking-tight">Data Format Guide</h2>
+            </div>
+            
+            <div class="space-y-5 text-sm text-slate-600 leading-relaxed">
+                <p>Upload a plain-text file (<code class="font-mono text-xs bg-slate-100 px-1.5 py-0.5 rounded">.csv</code>, <code class="font-mono text-xs bg-slate-100 px-1.5 py-0.5 rounded">.txt</code>, or <code class="font-mono text-xs bg-slate-100 px-1.5 py-0.5 rounded">.tsv</code>) containing a univariate time series.</p>
+                
+                <div>
+                    <h4 class="font-bold text-slate-800 mb-2">Accepted layouts</h4>
+                    <div class="space-y-3">
+                        <div>
+                            <p class="font-semibold text-slate-700 mb-1">Single column (one value per line)</p>
+                            <div class="bg-slate-900 rounded-lg p-3 font-mono text-xs text-emerald-400">
+                                0.523<br>0.891<br>1.204<br>0.667<br>...
+                            </div>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-slate-700 mb-1">Two columns: index/time, value</p>
+                            <div class="bg-slate-900 rounded-lg p-3 font-mono text-xs text-emerald-400">
+                                0, 0.523<br>1, 0.891<br>2, 1.204<br>3, 0.667<br>...
+                            </div>
+                            <p class="text-xs text-slate-400 mt-1">Separated by comma, semicolon, tab, or space. The first column is ignored; only the last column is used as the time series.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-slate-800 mb-2">Rules</h4>
+                    <ul class="list-disc list-inside space-y-1 text-slate-600">
+                        <li>A header row (non-numeric first line) is automatically skipped.</li>
+                        <li>Empty lines and whitespace-only lines are ignored.</li>
+                        <li>All values must be finite numbers.</li>
+                        <li>For β-divergence, all values must be strictly positive (<code class="font-mono text-xs bg-slate-100 px-1 py-0.5 rounded">> 0</code>).</li>
+                        <li>Max recommended length: ~2000 samples (browser computation).</li>
+                    </ul>
+                </div>
+            </div>
+
+            <button onclick="toggleFormatModal()" class="mt-6 w-full bg-slate-900 hover:bg-indigo-600 text-white font-semibold py-2.5 px-4 rounded-xl transition duration-300 text-sm">
+                Got it
+            </button>
+        </div>
+    </div>
+
+    <footer class="bg-slate-950 text-slate-500 py-12 text-center mt-10 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col items-center">
+            <img src="static/UM_logo.jpg" alt="UM Logo" class="h-8 w-auto mb-6 opacity-50 grayscale hover:grayscale-0 transition-all" onerror="this.onerror=null; this.style.display='none';">
+            <p class="text-sm">&copy; 2026 Department of Advanced Computing Sciences (DACS), Maastricht University. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

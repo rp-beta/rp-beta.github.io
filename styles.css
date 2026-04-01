@@ -1,0 +1,98 @@
+.loader {
+    border-top-color: #4f46e5;
+    -webkit-animation: spinner 1s cubic-bezier(0.55, 0.15, 0.45, 0.85) infinite;
+    animation: spinner 1s cubic-bezier(0.55, 0.15, 0.45, 0.85) infinite;
+}
+
+@keyframes spinner {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.bg-grid-pattern {
+    background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+    background-size: 24px 24px;
+}
+
+/* Data source toggle */
+.source-toggle {
+    display: flex;
+    background: #f1f5f9;
+    border-radius: 0.75rem;
+    padding: 3px;
+    border: 1px solid #e2e8f0;
+}
+
+.source-toggle button {
+    flex: 1;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 0.625rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: #64748b;
+    background: transparent;
+}
+
+.source-toggle button.active {
+    background: white;
+    color: #1e293b;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+/* File upload drop zone */
+.upload-zone {
+    border: 2px dashed #cbd5e1;
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: white;
+}
+
+.upload-zone:hover,
+.upload-zone.dragover {
+    border-color: #6366f1;
+    background: #eef2ff;
+}
+
+.upload-zone.has-file {
+    border-color: #22c55e;
+    border-style: solid;
+    background: #f0fdf4;
+}
+
+.upload-zone .icon {
+    font-size: 1.5rem;
+    color: #94a3b8;
+    margin-bottom: 0.35rem;
+    transition: color 0.2s;
+}
+
+.upload-zone:hover .icon,
+.upload-zone.dragover .icon {
+    color: #6366f1;
+}
+
+.upload-zone.has-file .icon {
+    color: #22c55e;
+}
+
+.upload-zone .label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #64748b;
+}
+
+.upload-zone.has-file .label {
+    color: #15803d;
+}
+
+.upload-zone .sublabel {
+    font-size: 0.7rem;
+    color: #94a3b8;
+    margin-top: 0.15rem;
+}
