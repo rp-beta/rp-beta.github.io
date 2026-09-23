@@ -22,6 +22,11 @@ function setDataSource(source) {
     document.getElementById('upload-input-group').classList.toggle('hidden', source !== 'upload');
 }
 
+function setFunctionExample(expression) {
+    document.getElementById('function').value = expression;
+    setDataSource('function');
+}
+
 // ============================================================
 // Format guide modal
 // ============================================================
@@ -169,20 +174,21 @@ function copyCode(text, btnElement) {
 }
 
 const bibtexData = {
-    'deckert2025': `@INPROCEEDINGS{deckert2025,
-  author={Deckert, Elena and Dreesen, Philippe and Marwan, Norbert and Boussé, Martijn},
-  booktitle={2025 33rd European Signal Processing Conference (EUSIPCO)}, 
-  title={{Beta-Divergence-Based Recurrence Plots for Audio Time-Series Analysis}}, 
-  year={2025},
-  volume={},
-  number={},
-  keywords={Machine learning algorithms;Time series analysis;Europe;Data visualization;Signal processing;Extraterrestrial measurements;Machine listening;Tuning;Physics;Astronomy;recurrence plots;$\\beta$-divergences;audio analysis},
-  doi={10.23919/EUSIPCO63237.2025.11226301}}`,
-    'polakowski2026': `@unpublished{polakowski2026,
+    'deckert2025': `@inproceedings{deckert2025,
+  author    = {Elena Deckert and Philippe Dreesen and Norbert Marwan and Martijn Boussé},
+  title     = {Beta-Divergence-Based Recurrence Plots for Audio Time-Series Analysis},
+  booktitle = {2025 33rd European Signal Processing Conference (EUSIPCO)},
+  pages     = {291--295},
+  year      = {2025},
+  doi       = {10.23919/EUSIPCO63237.2025.11226301}
+}`,
+    'polakowski2026': `@inproceedings{polakowski2026,
   author    = {Filip Polakowski-Karol and Carlos Martínez and Pietro Bonizzi and Joël Karel and Ralf Peeters and Philippe Dreesen and Martijn Boussé},
-  title     = {Beta-Divergence-Based Recurrence Analysis of EEG Signals for Seizure Detection},
-  note      = {Submitted to EUSIPCO 2026, under review},
-  year      = {2026}
+  title     = {Beta-Divergence-Based Recurrence Analysis of {EEG} Signals for Seizure Detection},
+  booktitle = {2026 34th European Signal Processing Conference (EUSIPCO)},
+  pages     = {956--960},
+  year      = {2026},
+  url       = {https://www.eurasip.org/Proceedings/Eusipco/Eusipco2026/pdfs/0000956.pdf}
 }`
 };
 
