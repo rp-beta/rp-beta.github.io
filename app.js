@@ -1,19 +1,33 @@
-// ============================================================
-// State
-// ============================================================
-let currentDataSource = 'function'; // 'function' | 'upload'
-let uploadedSeries = null;          // Float64Array or null
+let currentDataSource = 'function';
+let uploadedSeries = null;
 let uploadedFileName = null;
 
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementById('metric').value = 'beta';
     toggleThresholdInput();
     initUploadZone();
+    const example = new URLSearchParams(window.location.search).get('example');
+    if (example === 'periodic' || example === 'embedded' || example === 'threshold' || example === 'beta-intro') {
+        const preset = {
+            periodic: { threshold: '0.15', m: '1', tau: '1' },
+            embedded: { threshold: '0.3', m: '2', tau: '5' },
+            threshold: { threshold: '0.15', m: '3', tau: '5' },
+            'beta-intro': { threshold: '0.35', m: '2', tau: '2', metric: 'beta', beta: '1', expression: 'sin(5*pi*x) + 2' }
+        }[example];
+        document.getElementById('function').value = preset.expression || 'sin(5*pi*x)';
+        document.getElementById('metric').value = preset.metric || 'euclidean';
+        if (preset.beta !== undefined) document.getElementById('beta').value = preset.beta;
+        document.getElementById('rp_type').value = 'thresholded';
+        document.getElementById('threshold').value = preset.threshold;
+        document.getElementById('embedding_dim').value = preset.m;
+        document.getElementById('time_delay').value = preset.tau;
+        toggleBeta();
+        toggleThresholdInput();
+        document.getElementById('guide-preset-note').classList.remove('hidden');
+        if (example === 'beta-intro') document.querySelector('#guide-preset-note a').href = 'resources.html#beta';
+    }
 });
 
-// ============================================================
-// Data source toggle
-// ============================================================
 function setDataSource(source) {
     currentDataSource = source;
     document.getElementById('src-function').classList.toggle('active', source === 'function');
@@ -27,9 +41,6 @@ function setFunctionExample(expression) {
     setDataSource('function');
 }
 
-// ============================================================
-// Format guide modal
-// ============================================================
 function toggleFormatModal() {
     const modal = document.getElementById('format-modal');
     modal.classList.toggle('hidden');
@@ -40,9 +51,6 @@ function closeFormatModal(event) {
     if (event.target.id === 'format-modal') toggleFormatModal();
 }
 
-// ============================================================
-// File upload — click, drag-and-drop
-// ============================================================
 function initUploadZone() {
     const zone = document.getElementById('upload-zone');
     if (!zone) return;
@@ -90,7 +98,6 @@ function parseTimeSeries(text) {
     const lines = text.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
     if (lines.length === 0) throw new Error('File is empty.');
 
-    // Detect delimiter from the first non-empty line
     let startIdx = 0;
     const delimiters = [',', ';', '\t', /\s+/];
 
@@ -102,7 +109,6 @@ function parseTimeSeries(text) {
         return [line.trim()];
     }
 
-    // Check if first line is a header (contains non-numeric tokens)
     const firstParts = splitLine(lines[0]);
     const isHeader = firstParts.some(p => isNaN(parseFloat(p)));
     if (isHeader) startIdx = 1;
@@ -110,7 +116,6 @@ function parseTimeSeries(text) {
     const values = [];
     for (let i = startIdx; i < lines.length; i++) {
         const parts = splitLine(lines[i]);
-        // Take last column as the value
         const raw = parts[parts.length - 1];
         const val = parseFloat(raw);
         if (!isFinite(val)) throw new Error(`Non-numeric value on line ${i + 1}: "${raw}"`);
@@ -145,9 +150,6 @@ function resetUploadZone() {
     document.getElementById('file-info').classList.add('hidden');
 }
 
-// ============================================================
-// Original helpers (unchanged)
-// ============================================================
 function toggleAuthorModal(event) {
     if (event) event.preventDefault();
     const modal = document.getElementById('author-modal');
@@ -268,9 +270,6 @@ function getViridisColor(t) {
     }
 }
 
-// ============================================================
-// Main RP calculation — now supports both data sources
-// ============================================================
 async function calculateRP() {
     const metric = document.getElementById("metric").value;
     const beta = parseFloat(document.getElementById('beta').value);
@@ -381,7 +380,7 @@ async function calculateRP() {
                 let idx = (canvasY * N_prime + canvasX) * 4;
 
                 if (rpType === 'thresholded') {
-                    if (dist < threshold) {
+                    if (dist <= threshold) {
                         imgData.data[idx] = 0;
                         imgData.data[idx+1] = 0;
                         imgData.data[idx+2] = 0;

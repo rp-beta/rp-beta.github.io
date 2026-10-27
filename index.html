@@ -32,18 +32,19 @@
             <div class="flex justify-between h-20">
                 <div class="flex items-center group">
                     <img src="static/UM_logo.jpg" alt="UM Logo" class="h-10 w-auto mr-4 transition-transform group-hover:scale-105" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x50?text=UM+Logo';">
-                    <span class="hidden md:block font-bold text-lg text-slate-900 tracking-tight border-l border-slate-300 pl-4">Department of Advanced Computing Sciences</span>
-                    <span class="md:hidden font-bold text-lg text-slate-900 tracking-tight border-l border-slate-300 pl-4">DACS</span>
+                    <span class="hidden xl:block font-bold text-lg text-slate-900 tracking-tight border-l border-slate-300 pl-4">Department of Advanced Computing Sciences</span>
+                    <span class="xl:hidden font-bold text-lg text-slate-900 tracking-tight border-l border-slate-300 pl-4">DACS</span>
                 </div>
                 
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="#tool" class="text-sm text-slate-600 hover:text-indigo-600 font-semibold transition-colors">RP Computer</a>
                     <a href="#papers" class="text-sm text-slate-600 hover:text-indigo-600 font-semibold transition-colors">Research</a>
+                    <a href="resources.html" class="text-sm text-slate-500 hover:text-indigo-600 font-medium transition-colors">Resources</a>
                     <button onclick="toggleAuthorModal(event)" class="text-sm text-slate-600 hover:text-indigo-600 font-semibold transition-colors">Contact</button>
                 </div>
 
                 <div class="flex items-center md:hidden">
-                    <button onclick="toggleMobileMenu()" class="text-slate-600 hover:text-indigo-600 focus:outline-none transition-colors">
+                    <button onclick="toggleMobileMenu()" aria-label="Toggle navigation" class="text-slate-600 hover:text-indigo-600 focus:outline-none transition-colors">
                         <i class="fa-solid fa-bars text-2xl"></i>
                     </button>
                 </div>
@@ -54,6 +55,7 @@
             <div class="flex flex-col px-6 py-4 space-y-4">
                 <a href="#tool" onclick="toggleMobileMenu()" class="block text-base text-slate-700 font-semibold hover:text-indigo-600 transition-colors">RP Computer</a>
                 <a href="#papers" onclick="toggleMobileMenu()" class="block text-base text-slate-700 font-semibold hover:text-indigo-600 transition-colors">Research</a>
+                <a href="resources.html" class="block text-base text-slate-600 font-medium hover:text-indigo-600 transition-colors">Resources</a>
                 <button onclick="toggleAuthorModal(event); toggleMobileMenu()" class="block w-full text-left text-base text-slate-700 font-semibold hover:text-indigo-600 transition-colors">Contact</button>
             </div>
         </div>
@@ -90,9 +92,10 @@
                 <div class="w-12 h-12 rounded-xl bg-indigo-100 flex items-center justify-center mr-4">
                     <i class="fa-solid fa-calculator text-2xl text-indigo-600"></i>
                 </div>
-                <h2 class="text-3xl font-bold text-slate-900 tracking-tight">Interactive RP Computer</h2>
+                <h2 class="text-3xl font-bold text-slate-900 tracking-tight">RP Computer</h2>
             </div>
             
+            <p id="guide-preset-note" class="hidden mb-6 text-sm text-slate-600" role="status">Sine-wave exercise loaded from the <a href="resources.html#threshold" class="text-indigo-600 underline">getting-started guide</a>. The function uses about 20 samples per cycle. Change one parameter at a time, then select Generate Plot.</p>
             <div class="bg-white rounded-3xl shadow-xl shadow-slate-200/50 overflow-hidden ring-1 ring-slate-900/5">
                 <div class="grid grid-cols-1 lg:grid-cols-5">
                     
@@ -102,7 +105,6 @@
                         </h3>
                         <div class="space-y-5">
 
-                            <!-- Data source toggle -->
                             <div>
                                 <label class="block text-sm font-semibold text-slate-700 mb-1.5">Data Source</label>
                                 <div class="source-toggle">
@@ -115,7 +117,6 @@
                                 </div>
                             </div>
 
-                            <!-- Function input (default visible) -->
                             <div id="function-input-group">
                                 <label class="block text-sm font-semibold text-slate-700 mb-1.5">Mathematical Function, f(x)</label>
                                 <input type="text" id="function" value="sin(x) + 2" class="font-mono w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl shadow-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all">
@@ -126,7 +127,6 @@
                                 </div>
                             </div>
 
-                            <!-- File upload input (hidden by default) -->
                             <div id="upload-input-group" class="hidden">
                                 <div class="flex items-center justify-between mb-1.5">
                                     <label class="block text-sm font-semibold text-slate-700">Upload Time Series</label>
@@ -289,7 +289,6 @@
         </section>
     </div>
 
-    <!-- Author/Contact Modal (unchanged) -->
     <div id="author-modal" class="hidden fixed inset-0 z-[100] bg-slate-900/50 backdrop-blur-sm overflow-y-auto w-full h-full flex justify-center items-start sm:items-center p-4 sm:p-0" onclick="closeAuthorModal(event)">        <div class="relative bg-white rounded-3xl shadow-2xl w-full max-w-5xl mx-4 my-8 p-8" onclick="event.stopPropagation()">
             <button onclick="toggleAuthorModal(event)" class="absolute top-6 right-6 text-slate-400 hover:text-slate-900 text-2xl transition-colors">
                 <i class="fa-solid fa-xmark"></i>
@@ -342,7 +341,6 @@
         </div>
     </div>
 
-    <!-- Format Guide Modal -->
     <div id="format-modal" class="hidden fixed inset-0 z-[100] bg-slate-900/50 backdrop-blur-sm overflow-y-auto w-full h-full p-4 sm:p-8" onclick="closeFormatModal(event)">
         <div class="relative bg-white rounded-3xl shadow-2xl w-full max-w-lg mx-auto my-auto p-8" style="margin-top: max(2rem, calc(50vh - 280px));" onclick="event.stopPropagation()">
             <button onclick="toggleFormatModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-900 text-xl transition-colors">
@@ -399,6 +397,7 @@
         <div class="max-w-7xl mx-auto px-6 flex flex-col items-center">
             <img src="static/UM_logo.jpg" alt="UM Logo" class="h-8 w-auto mb-6 opacity-50 grayscale hover:grayscale-0 transition-all" onerror="this.onerror=null; this.style.display='none';">
             <p class="text-sm">&copy; 2026 Department of Advanced Computing Sciences (DACS), Maastricht University. All rights reserved.</p>
+            <a href="resources.html" class="mt-4 text-sm text-slate-400 hover:text-white transition-colors">Learning resources</a>
         </div>
     </footer>
 
