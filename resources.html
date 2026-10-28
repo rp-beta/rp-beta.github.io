@@ -9,23 +9,37 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="resources.css">
+    <link rel="stylesheet" href="styles.css?v=20261028">
+    <link rel="stylesheet" href="resources.css?v=20261028">
+    <script src="navigation.js" defer></script>
     <script src="resources.js" defer></script>
 </head>
 <body>
     <a class="skip-link" href="#guide">Skip to the guide</a>
     <header class="site-header">
-        <div class="header-inner">
-            <a class="brand" href="index.html" aria-label="DACS recurrence plots home">
-                <img src="static/UM_logo.jpg" alt="Maastricht University" width="116" height="40">
-                <span>DACS<span class="brand-full"> · Recurrence plots</span></span>
+        <div class="site-header__inner">
+            <a class="site-header__brand" href="index.html" aria-label="DACS home">
+                <img class="site-header__logo" src="static/UM_logo.jpg" alt="Maastricht University" width="116" height="40">
+                <span class="site-header__name"><span class="site-header__name-full">Department of Advanced Computing Sciences</span><span class="site-header__name-short">DACS</span></span>
             </a>
-            <nav class="header-links" aria-label="Main navigation">
-                <a href="index.html#tool">RP Computer</a>
-                <a href="index.html#papers" class="research-link">Research</a>
-                <a href="resources.html" aria-current="page">Resources</a>
+            <nav class="site-header__links" aria-label="Main navigation">
+                <a class="site-header__link" href="index.html#tool">RP Computer</a>
+                <a class="site-header__link" href="index.html#papers">Research</a>
+                <a class="site-header__link" href="resources.html" aria-current="page">Resources</a>
+                <a class="site-header__link" href="index.html#contact" data-contact-link>Contact</a>
             </nav>
+            <button class="site-header__toggle" id="navigation-toggle" type="button" aria-label="Open navigation" aria-controls="mobile-menu" aria-expanded="false">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path class="site-header__open-icon" d="M3 6h18M3 12h18M3 18h18"></path><path class="site-header__close-icon" d="m6 6 12 12M18 6 6 18"></path></svg>
+            </button>
         </div>
+        <nav class="site-header__mobile" id="mobile-menu" aria-label="Mobile navigation" hidden>
+            <div class="site-header__mobile-inner">
+                <a class="site-header__link" href="index.html#tool">RP Computer</a>
+                <a class="site-header__link" href="index.html#papers">Research</a>
+                <a class="site-header__link" href="resources.html" aria-current="page">Resources</a>
+                <a class="site-header__link" href="index.html#contact" data-contact-link>Contact</a>
+            </div>
+        </nav>
     </header>
     <main id="guide">
         <div class="hero-wrap">

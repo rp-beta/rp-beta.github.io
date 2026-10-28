@@ -10,7 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=20261028">
+    <script src="navigation.js" defer></script>
     
     <script>
         tailwind.config = {
@@ -27,39 +28,31 @@
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased selection:bg-indigo-100 selection:text-indigo-900">
 
-    <nav class="backdrop-blur-xl bg-white/70 border-b border-slate-200/50 sticky top-0 z-50 transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8">
-            <div class="flex justify-between h-20">
-                <div class="flex items-center group">
-                    <img src="static/UM_logo.jpg" alt="UM Logo" class="h-10 w-auto mr-4 transition-transform group-hover:scale-105" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x50?text=UM+Logo';">
-                    <span class="hidden xl:block font-bold text-lg text-slate-900 tracking-tight border-l border-slate-300 pl-4">Department of Advanced Computing Sciences</span>
-                    <span class="xl:hidden font-bold text-lg text-slate-900 tracking-tight border-l border-slate-300 pl-4">DACS</span>
-                </div>
-                
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#tool" class="text-sm text-slate-600 hover:text-indigo-600 font-semibold transition-colors">RP Computer</a>
-                    <a href="#papers" class="text-sm text-slate-600 hover:text-indigo-600 font-semibold transition-colors">Research</a>
-                    <a href="resources.html" class="text-sm text-slate-500 hover:text-indigo-600 font-medium transition-colors">Resources</a>
-                    <button onclick="toggleAuthorModal(event)" class="text-sm text-slate-600 hover:text-indigo-600 font-semibold transition-colors">Contact</button>
-                </div>
-
-                <div class="flex items-center md:hidden">
-                    <button onclick="toggleMobileMenu()" aria-label="Toggle navigation" class="text-slate-600 hover:text-indigo-600 focus:outline-none transition-colors">
-                        <i class="fa-solid fa-bars text-2xl"></i>
-                    </button>
-                </div>
-            </div>
+    <header class="site-header">
+        <div class="site-header__inner">
+            <a class="site-header__brand" href="index.html" aria-label="DACS home">
+                <img class="site-header__logo" src="static/UM_logo.jpg" alt="Maastricht University" width="116" height="40">
+                <span class="site-header__name"><span class="site-header__name-full">Department of Advanced Computing Sciences</span><span class="site-header__name-short">DACS</span></span>
+            </a>
+            <nav class="site-header__links" aria-label="Main navigation">
+                <a class="site-header__link" href="#tool">RP Computer</a>
+                <a class="site-header__link" href="#papers">Research</a>
+                <a class="site-header__link" href="resources.html">Resources</a>
+                <a class="site-header__link" href="#contact" data-contact-link>Contact</a>
+            </nav>
+            <button class="site-header__toggle" id="navigation-toggle" type="button" aria-label="Open navigation" aria-controls="mobile-menu" aria-expanded="false">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path class="site-header__open-icon" d="M3 6h18M3 12h18M3 18h18"></path><path class="site-header__close-icon" d="m6 6 12 12M18 6 6 18"></path></svg>
+            </button>
         </div>
-
-        <div id="mobile-menu" class="hidden md:hidden bg-white/95 backdrop-blur-xl border-t border-slate-200/50 absolute w-full shadow-lg transition-all duration-300">
-            <div class="flex flex-col px-6 py-4 space-y-4">
-                <a href="#tool" onclick="toggleMobileMenu()" class="block text-base text-slate-700 font-semibold hover:text-indigo-600 transition-colors">RP Computer</a>
-                <a href="#papers" onclick="toggleMobileMenu()" class="block text-base text-slate-700 font-semibold hover:text-indigo-600 transition-colors">Research</a>
-                <a href="resources.html" class="block text-base text-slate-600 font-medium hover:text-indigo-600 transition-colors">Resources</a>
-                <button onclick="toggleAuthorModal(event); toggleMobileMenu()" class="block w-full text-left text-base text-slate-700 font-semibold hover:text-indigo-600 transition-colors">Contact</button>
+        <nav class="site-header__mobile" id="mobile-menu" aria-label="Mobile navigation" hidden>
+            <div class="site-header__mobile-inner">
+                <a class="site-header__link" href="#tool">RP Computer</a>
+                <a class="site-header__link" href="#papers">Research</a>
+                <a class="site-header__link" href="resources.html">Resources</a>
+                <a class="site-header__link" href="#contact" data-contact-link>Contact</a>
             </div>
-        </div>
-    </nav>
+        </nav>
+    </header>
 
         <div class="bg-slate-900 py-20 sm:py-28 border-b border-slate-800">
             <div class="max-w-4xl mx-auto px-6 lg:px-8 text-center">
@@ -401,7 +394,7 @@
         </div>
     </footer>
 
-    <script src="app.js"></script>
+    <script src="app.js?v=20261028"></script>
 </body>
 </html>
 

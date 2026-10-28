@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById('metric').value = 'beta';
     toggleThresholdInput();
     initUploadZone();
+    if (window.location.hash === '#contact') toggleAuthorModal();
     const example = new URLSearchParams(window.location.search).get('example');
     if (example === 'periodic' || example === 'embedded' || example === 'threshold' || example === 'beta-intro') {
         const preset = {
@@ -159,11 +160,6 @@ function toggleAuthorModal(event) {
 
 function closeAuthorModal(event) {
     if (event.target.id === 'author-modal') toggleAuthorModal();
-}
-
-function toggleMobileMenu() {
-    const menu = document.getElementById('mobile-menu');
-    menu.classList.toggle('hidden');
 }
 
 function copyCode(text, btnElement) {
